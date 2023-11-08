@@ -1,0 +1,27 @@
+package com.lxl.spark.core.rdd.operator.action
+
+import org.apache.spark.{SparkConf, SparkContext}
+
+/**
+ * 转换算子，只是用逻辑将rdd不断包装，要使用collect触发才会执行下去
+ * 行动算子，包含逻辑的同时也会一同运行
+ * */
+object Spark01_RDD_Operator_Action {
+
+    def main(args: Array[String]): Unit = {
+
+        val sparkConf = new SparkConf().setMaster("local[*]").setAppName("Operator")
+        val sc = new SparkContext(sparkConf)
+
+        val rdd = sc.makeRDD(List(1,2,3,4))
+
+        // TODO - 行动算子
+        // 所谓的行动算子，其实就是触发作业(Job)执行的方法
+        // 底层代码调用的是环境对象的runJob方法
+        // 底层代码中会创建ActiveJob，并提交执行。
+        rdd.collect()
+
+        sc.stop()
+
+    }
+}
